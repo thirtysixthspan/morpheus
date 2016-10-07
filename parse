@@ -1,0 +1,4 @@
+#!/bin/sh
+set -x
+echo $@
+curl --data-urlencode source="$@" http://localhost:8888/api/v1/message/parse

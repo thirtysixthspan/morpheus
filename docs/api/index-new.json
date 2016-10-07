@@ -1,0 +1,20 @@
+{
+  "info": {
+    "schema_version": "1.0",
+    "name": "Morpheus",
+    "title": "Morpheus",
+    "description": "Chat Message Parsing API",
+    "base_path": "/api/v:api_version",
+    "version_with": "path",
+    "consumes": [
+      "json",
+      "x-www-form-urlencoded"
+    ],
+    "produces": [
+      "json"
+    ]
+  },
+  "versions": [
+    "1"
+  ]
+}

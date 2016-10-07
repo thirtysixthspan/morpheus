@@ -1,0 +1,330 @@
+{
+  "info": {
+    "schema_version": "1.0",
+    "name": "Morpheus",
+    "title": "Morpheus",
+    "description": "Chat Message Parsing API",
+    "base_path": "/api/v1",
+    "version_with": "path",
+    "consumes": [
+      "json",
+      "x-www-form-urlencoded"
+    ],
+    "produces": [
+      "json"
+    ]
+  },
+  "resources": {
+    "V1-ApiResources-Message": {
+      "description": null,
+      "media_type": {
+        "name": "V1::MediaTypes::Metadata",
+        "family": "hash",
+        "id": "V1-MediaTypes-Metadata",
+        "key": {
+          "type": {
+            "name": "Symbol",
+            "family": "string",
+            "id": "Attributor-Symbol"
+          }
+        }
+      },
+      "actions": [
+        {
+          "description": "Parse a message and return a metadata response",
+          "name": "parse",
+          "metadata": {
+          },
+          "payload": {
+            "required": true,
+            "options": {
+              "reference": "V1::MediaTypes::Metadata"
+            },
+            "type": {
+              "name": "Struct",
+              "family": "hash",
+              "id": null,
+              "key": {
+                "type": {
+                  "name": "Symbol",
+                  "family": "string",
+                  "id": "Attributor-Symbol"
+                }
+              },
+              "attributes": {
+                "source": {
+                  "description": "A text message with markup",
+                  "required": true,
+                  "example_definition": "@bob @john (success) such a cool feature!",
+                  "type": {
+                    "name": "String",
+                    "family": "string",
+                    "id": "Attributor-String"
+                  },
+                  "example": "@bob @john (success) such a cool feature!"
+                }
+              },
+              "requirements": [
+                {
+                  "type": "all",
+                  "attributes": [
+                    "source"
+                  ]
+                }
+              ]
+            },
+            "examples": {
+              "json": {
+                "content_type": "application/json",
+                "body": "{\n  \"source\": \"@bob @john (success) such a cool feature!\"\n}"
+              },
+              "x-www-form-urlencoded": {
+                "content_type": "application/x-www-form-urlencoded",
+                "body": "source=%40bob+%40john+%28success%29+such+a+cool+feature%21"
+              }
+            }
+          },
+          "responses": {
+          },
+          "urls": [
+            {
+              "verb": "POST",
+              "path": "/api/v1/message/parse",
+              "version": "1",
+              "example": "/api/v1/message/parse"
+            }
+          ]
+        }
+      ],
+      "name": "V1::ApiResources::Message",
+      "display_name": "Message",
+      "metadata": {
+      },
+      "traits": [
+
+      ]
+    }
+  },
+  "schemas": {
+    "V1-MediaTypes-Metadata": {
+      "name": "V1::MediaTypes::Metadata",
+      "family": "hash",
+      "id": "V1-MediaTypes-Metadata",
+      "key": {
+        "type": {
+          "name": "Symbol",
+          "family": "string",
+          "id": "Attributor-Symbol"
+        }
+      },
+      "attributes": {
+        "mentions": {
+          "description": "Names of users mentioned in the message",
+          "example_definition": [
+            "chris",
+            "bob",
+            "peter"
+          ],
+          "type": {
+            "name": "Collection",
+            "family": "array",
+            "id": null,
+            "options": {
+            },
+            "member_attribute": {
+              "type": {
+                "name": "String",
+                "family": "string",
+                "id": "Attributor-String"
+              },
+              "example": "chris"
+            }
+          },
+          "example": [
+            "chris",
+            "bob",
+            "peter"
+          ]
+        },
+        "emoticons": {
+          "description": "Names of emoticons mentioned in the message",
+          "example_definition": [
+            "party",
+            "success",
+            "happyjoy"
+          ],
+          "type": {
+            "name": "Collection",
+            "family": "array",
+            "id": null,
+            "options": {
+            },
+            "member_attribute": {
+              "type": {
+                "name": "String",
+                "family": "string",
+                "id": "Attributor-String"
+              },
+              "example": "party"
+            }
+          },
+          "example": [
+            "party",
+            "success",
+            "happyjoy"
+          ]
+        },
+        "links": {
+          "description": "Links mentioned in the message",
+          "type": {
+            "name": "Collection",
+            "family": "array",
+            "id": null,
+            "options": {
+            },
+            "member_attribute": {
+              "options": {
+                "reference": "V1::MediaTypes::Link"
+              },
+              "type": {
+                "name": "V1::MediaTypes::Link",
+                "family": "hash",
+                "id": "V1-MediaTypes-Link",
+                "key": {
+                  "type": {
+                    "name": "Symbol",
+                    "family": "string",
+                    "id": "Attributor-Symbol"
+                  }
+                }
+              }
+            }
+          },
+          "example": [
+            {
+              "url": "http://www.nbcolympics.com",
+              "title": "2016 Rio Olympic Games | NBC Olympics"
+            }
+          ]
+        }
+      },
+      "requirements": [
+
+      ],
+      "views": {
+        "default": {
+          "attributes": {
+            "mentions": {
+            },
+            "emoticons": {
+            },
+            "links": {
+              "view": "default"
+            }
+          },
+          "type": "standard",
+          "example": {
+            "mentions": [
+              "chris",
+              "bob",
+              "peter"
+            ],
+            "emoticons": [
+              "party",
+              "success",
+              "happyjoy"
+            ],
+            "links": [
+              {
+                "url": "http://www.nbcolympics.com",
+                "title": "2016 Rio Olympic Games | NBC Olympics"
+              }
+            ]
+          }
+        }
+      },
+      "identifier": "application/json",
+      "description": "This is metadata response that describes a message",
+      "display_name": "Metadata",
+      "example": {
+        "mentions": [
+          "chris",
+          "bob",
+          "peter"
+        ],
+        "emoticons": [
+          "party",
+          "success",
+          "happyjoy"
+        ],
+        "links": [
+          {
+            "url": "http://www.nbcolympics.com",
+            "title": "2016 Rio Olympic Games | NBC Olympics"
+          }
+        ]
+      }
+    },
+    "V1-MediaTypes-Link": {
+      "name": "V1::MediaTypes::Link",
+      "family": "hash",
+      "id": "V1-MediaTypes-Link",
+      "key": {
+        "type": {
+          "name": "Symbol",
+          "family": "string",
+          "id": "Attributor-Symbol"
+        }
+      },
+      "attributes": {
+        "url": {
+          "description": "Web URL",
+          "example_definition": "http://www.nbcolympics.com",
+          "type": {
+            "name": "String",
+            "family": "string",
+            "id": "Attributor-String"
+          },
+          "example": "http://www.nbcolympics.com"
+        },
+        "title": {
+          "description": "Title of Web Page at URL",
+          "example_definition": "2016 Rio Olympic Games | NBC Olympics",
+          "type": {
+            "name": "String",
+            "family": "string",
+            "id": "Attributor-String"
+          },
+          "example": "2016 Rio Olympic Games | NBC Olympics"
+        }
+      },
+      "requirements": [
+
+      ],
+      "views": {
+        "default": {
+          "attributes": {
+            "url": {
+            },
+            "title": {
+            }
+          },
+          "type": "standard",
+          "example": {
+            "url": "http://www.nbcolympics.com",
+            "title": "2016 Rio Olympic Games | NBC Olympics"
+          }
+        }
+      },
+      "identifier": "application/json",
+      "description": "This is a web link response",
+      "display_name": "Link",
+      "example": {
+        "url": "http://www.nbcolympics.com",
+        "title": "2016 Rio Olympic Games | NBC Olympics"
+      }
+    }
+  },
+  "traits": {
+  }
+}
